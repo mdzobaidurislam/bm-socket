@@ -41,6 +41,10 @@ io.on("connection", (socket) => {
 });
 
 app.use(express.json());
+app.post("/", (req, res) => {
+    res.status(200).json({ message: "Welcome server" });
+});
+
 
 app.post("/order-placed", (req, res) => {
     const { user_id} = req.body;
