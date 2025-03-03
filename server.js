@@ -4,38 +4,25 @@ const { Server } = require("socket.io");
 const cors = require("cors");
 
 const app = express();
-const server = http.createServer(app);
-
-// app.use(cors({
-//     origin: "*", // Allow all origins
-//     methods: ["GET", "POST"],
-//     allowedHeaders: ["Content-Type", "Authorization"]
-// }));
 
 app.use(cors({
-    origin: ["http://socket.test", "http://localhost:5173", "https://bm-socket.vercel.app"], // Add allowed origins
-    methods: ["GET", "POST"],
+    origin: (origin, callback) => {
+        if (!origin) return callback(null, true); // Allow non-browser requests
+        return callback(null, true); // Allow all domains
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true
 }));
 
+const server = http.createServer(app);
+
 const io = new Server(server, {
     cors: {
-        origin: ["http://socket.test", "http://localhost:5173", "https://bm-socket.vercel.app"],
-        methods: ["GET", "POST"],
-        allowedHeaders: ["Content-Type", "Authorization"],
-        credentials: true
+        origin: "*",
+        methods: ["GET", "POST"]
     }
 });
-
-
-
-// const io = new Server(server, {
-//     cors: {
-//         origin: "*",
-//         methods: ["GET", "POST"]
-//     }
-// });
 
 let onlineUsers = new Map();
 
