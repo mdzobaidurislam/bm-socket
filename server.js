@@ -6,13 +6,9 @@ const cors = require("cors");
 const app = express();
 
 app.use(cors({
-    origin: (origin, callback) => {
-        if (!origin) return callback(null, true); // Allow non-browser requests
-        return callback(null, true); // Allow all domains
-    },
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true
+    origin: "*", // Allow all origins
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
 const server = http.createServer(app);
