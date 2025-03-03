@@ -41,7 +41,7 @@ io.on("connection", (socket) => {
 });
 
 app.use(express.json());
-app.post("/", (req, res) => {
+app.get("/", (req, res) => {
     res.status(200).json({ message: "Welcome server" });
 });
 
